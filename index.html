@@ -414,6 +414,55 @@
     transform: scale(1.15);
   }
 
+  /* Welcome Overlay Animation */
+  #welcome-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(120deg, #d6336c 60%, #4a4a8a 100%);
+    color: #fff;
+    z-index: 3000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-family);
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    animation: fadeOut 1.2s 2.2s forwards;
+    opacity: 1;
+    transition: opacity 0.7s;
+  }
+  #welcome-overlay .welcome-logo {
+    width: 90px;
+    height: 90px;
+    background: #fff;
+    border-radius: 50%;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.7rem;
+    color: #d6336c;
+    box-shadow: 0 4px 24px rgba(74,74,138,0.18);
+    font-weight: 900;
+    border: 3px solid #f8a1bf;
+  }
+  #welcome-overlay .welcome-text {
+    margin-bottom: 0.7rem;
+    text-shadow: 0 2px 12px rgba(74,74,138,0.18);
+  }
+  #welcome-overlay .welcome-sub {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-top: 0.5rem;
+    opacity: 0.85;
+    letter-spacing: 0.01em;
+  }
+  @keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; pointer-events: none; }
+  }
+
   /* Responsive */
 
   @media (max-width: 900px) {
@@ -591,7 +640,12 @@
   </main>
 </div>
 
-
+<!-- Welcome Overlay -->
+<div id="welcome-overlay">
+  <div class="welcome-logo"><i class="fas fa-venus"></i></div>
+  <div class="welcome-text">Welcome to We Can Voice for Women Foundation</div>
+  <div class="welcome-sub">Empowering Women, Transforming Communities</div>
+</div>
 
 <script>
   const toggleBtn = document.getElementById('toggleSidebar');
@@ -623,6 +677,14 @@
         link.classList.add('active');
       }
     });
+  });
+
+  // Welcome overlay fade out
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      const overlay = document.getElementById('welcome-overlay');
+      if (overlay) overlay.style.display = 'none';
+    }, 3000);
   });
 </script>
 
