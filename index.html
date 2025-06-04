@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>We Can Voice for Women Foundation Dashboard</title>
+
+<!-- Font Awesome CDN for icons -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  integrity="sha512-pV8jYcGjuB5DCLxAGGI3G1NhOZ9v+rNGLnRd4H8RBT1nEfYMZi8q+0BiGBuw2KAuu+gTNIE6RDY43U+Q/kSOyg=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+
+<style>
+  :root {
+    --primary-color: #d6336c;
+    --secondary-color: #f8a1bf;
+    --accent-color: #4a4a8a;
+    --background-color: #fff8fb;
+    --text-color: #333;
+    --section-bg: #fff;
+    --shadow-color: rgba(214, 51, 108, 0.3);
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --sidebar-width: 280px;
+    --transition-fast: 0.3s ease-in-out;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* --- Unique Modern Design Enhancements --- */
+  .sidebar {
+    background: linear-gradient(135deg, #d6336c 60%, #4a4a8a 100%);
+    box-shadow: 2px 0 24px 0 rgba(74,74,138,0.10), 0 2px 8px 0 rgba(214,51,108,0.10);
+    backdrop-filter: blur(2px);
+    border-right: 2px solid rgba(255,255,255,0.08);
+  }
+  .sidebar-logo {
+    background: linear-gradient(135deg, #fff 60%, #f8a1bf 100%);
+    box-shadow: 0 2px 12px 0 rgba(214,51,108,0.10);
+    border: 2px solid #fff8fb;
+    letter-spacing: 0.05em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 2rem;
+    color: #d6336c;
+  }
+  .sidebar-title {
+    background: rgba(255,255,255,0.10);
+    padding: 0.2rem 0.7rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px 0 rgba(255,255,255,0.08);
+  }
+  .card, .leader {
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(74,74,138,0.10), 0 2px 8px 0 rgba(214,51,108,0.10);
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .card:hover, .leader:hover {
+    box-shadow: 0 16px 40px 0 rgba(74,74,138,0.18), 0 4px 16px 0 rgba(214,51,108,0.18);
+    transform: translateY(-6px) scale(1.025);
+  }
+  .call-to-action {
+    background: linear-gradient(90deg, #d6336c 70%, #4a4a8a 100%);
+    color: #fff;
+    border: none;
+    box-shadow: 0 8px 32px 0 rgba(214,51,108,0.18);
+    font-size: 1.35rem;
+    border-radius: 18px;
+    margin-top: 2.5rem;
+    letter-spacing: 0.01em;
+    position: relative;
+    overflow: hidden;
+  }
+  .call-to-action:before {
+    content: '\f4c7';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2.2rem;
+    opacity: 0.13;
+    color: #fff;
+    pointer-events: none;
+  }
+  footer {
+    background: linear-gradient(90deg, #f8a1bf 60%, #fff8fb 100%);
+    color: var(--accent-color);
+    border-top: 2px solid #f3f1f6;
+    box-shadow: 0 -2px 12px 0 rgba(214,51,108,0.07);
+    border-radius: 0 0 18px 18px;
+  }
+  footer a {
+    transition: color 0.2s, transform 0.2s;
+  }
+  footer a:hover {
+    color: #4a4a8a;
+    transform: scale(1.15);
+  }
+  /* Glassmorphism for header */
+  header {
+    background: rgba(214,51,108,0.92);
+    backdrop-filter: blur(2px);
+    border-bottom: 2px solid rgba(255,255,255,0.08);
+    box-shadow: 0 2px 16px 0 rgba(214,51,108,0.10);
+  }
+
+  /* Sidebar */
+
+  .sidebar {
+    width: var(--sidebar-width);
+    color: white;
+    padding: 2rem 1.5rem 2rem 1.5rem;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    transition: transform var(--transition-fast);
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+  }
+
+  .sidebar.collapsed {
+    transform: translateX(-100%);
+  }
+
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2.5rem;
+    gap: 0.75rem;
+  }
+
+  .sidebar-logo {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.6rem;
+    user-select: none;
+  }
+
+  .sidebar-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    transition: background var(--transition-fast), color var(--transition-fast);
+  }
+
+  nav a i {
+    min-width: 20px;
+    text-align: center;
+  }
+
+  nav a:hover,
+  nav a.active {
+    background: white;
+    color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(255 255 255 / 0.7);
+  }
+
+  /* Main Content */
+
+  .main-content {
+    margin-left: var(--sidebar-width);
+    padding: 0 0 0 0;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  header {
+    position: fixed;
+    left: var(--sidebar-width);
+    right: 0;
+    height: 68px;
+    background: var(--primary-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 2.2rem;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    z-index: 900;
+    justify-content: space-between;
+  }
+
+  header .toggle-btn {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: white;
+    background: transparent;
+    border: none;
+    user-select: none;
+  }
+
+  header h1 {
+    font-size: 2rem;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+
+  main {
+    padding: 3.5rem 2.5rem 2.5rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Cards Grid */
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
+    gap: 2.2rem;
+    margin-bottom: 0;
+  }
+
+  .card {
+    background: var(--section-bg);
+    border-radius: 14px;
+    padding: 1.8rem 2rem;
+    box-shadow:
+      0 10px 15px rgba(214,51,108,0.15),
+      0 4px 6px rgba(214,51,108,0.1);
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card:hover {
+    box-shadow:
+      0 20px 30px rgba(214,51,108,0.25),
+      0 8px 12px rgba(214,51,108,0.18);
+  }
+
+  .card h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    border-bottom: 3px solid var(--primary-color);
+    padding-bottom: 0.3rem;
+  }
+
+  .card ul {
+    margin-left: 1.25rem;
+  }
+
+  /* Leadership Cards */
+
+  .leadership-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .leader {
+    flex: 1 1 45%;
+    background: var(--secondary-color);
+    border-radius: 14px;
+    padding: 1.6rem 2rem;
+    box-shadow:
+      0 8px 12px rgba(218,57,103,0.3);
+    position: relative;
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+    min-height: 340px;
+  }
+
+  .leader:hover {
+    box-shadow:
+      0 14px 20px rgba(218,57,103,0.5);
+  }
+
+  .leader img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1.3rem;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    align-self: center;
+    border: 3px solid #fff8fb;
+    box-shadow: 0 6px 18px rgba(214,51,108,0.13);
+  }
+
+  .leader h4 {
+    margin: 0 0 0.4rem 0;
+    color: var(--accent-color);
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .leader p {
+    margin: 0.2rem 0;
+    flex-grow: 1;
+    text-align: center;
+    font-size: 0.95rem;
+  }
+
+  /* Contact Links Styling */
+
+  address {
+    font-style: normal;
+    line-height: 1.5;
+  }
+
+  address a {
+    color: var(--primary-color);
+    font-weight: 600;
+  }
+  address a:hover {
+    text-decoration: underline;
+  }
+
+  /* Call To Action */
+
+  .call-to-action {
+    background: linear-gradient(90deg, #d6336c 70%, #4a4a8a 100%);
+    color: #fff;
+    border: none;
+    box-shadow: 0 8px 32px 0 rgba(214,51,108,0.18);
+    font-size: 1.35rem;
+    border-radius: 18px;
+    margin-top: 2.5rem;
+    letter-spacing: 0.01em;
+    position: relative;
+    overflow: hidden;
+  }
+  .call-to-action:before {
+    content: '\f4c7';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2.2rem;
+    opacity: 0.13;
+    color: #fff;
+    pointer-events: none;
+  }
+
+  /* Footer */
+
+  footer {
+    background: linear-gradient(90deg, #f8a1bf 60%, #fff8fb 100%);
+    color: var(--accent-color);
+    border-top: 2px solid #f3f1f6;
+    box-shadow: 0 -2px 12px 0 rgba(214,51,108,0.07);
+    border-radius: 0 0 18px 18px;
+    background-color: #f3f1f6;
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    font-size: 1.05rem;
+    margin-top: 2.5rem;
+  }
+
+  footer a {
+    color: var(--primary-color);
+    margin: 0 0.6rem;
+    font-weight: 700;
+    transition: color 0.2s, transform 0.2s;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+    color: #4a4a8a;
+    transform: scale(1.15);
+  }
+
+  /* Responsive */
+
+  @media (max-width: 900px) {
+    .leader {
+      flex: 1 1 100%;
+    }
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    main {
+      padding: 2.5rem 1.2rem 1.5rem 1.2rem;
+      gap: 1.5rem;
+    }
+    .leadership-container {
+      gap: 1.2rem;
+    }
+    header {
+      padding: 0 1.2rem;
+    }
+    footer {
+      padding: 1.2rem 0.7rem;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .main-content {
+      margin-left: 0;
+      width: 100%;
+      border-radius: 18px 0 0 0;
+    }
+    main {
+      padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+      gap: 1.1rem;
+    }
+    .sidebar {
+      padding: 1.2rem 0.7rem 1.2rem 0.7rem;
+    }
+    header {
+      padding: 0 0.7rem;
+      height: 60px;
+    }
+    footer {
+      padding: 1rem 0.5rem;
+      font-size: 0.98rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo" aria-label="Organization Logo" title="We Can Voice for Women Foundation"></div>
+    <div class="sidebar-title">Voice for Women</div>
+  </div>
+  <nav>
+    <a href="#about" class="active"><i class="fas fa-info-circle"></i> About</a>
+    <a href="#vision-mission"><i class="fas fa-eye"></i> Vision & Mission</a>
+    <a href="#focus-areas"><i class="fas fa-bullseye"></i> Core Focus Areas</a>
+    <a href="#beneficiaries"><i class="fas fa-users"></i> Target Beneficiaries</a>
+    <a href="#geographic-focus"><i class="fas fa-map-marker-alt"></i> Geographic Focus</a>
+    <a href="#partnerships"><i class="fas fa-handshake"></i> Partnerships</a>
+    <a href="#leadership"><i class="fas fa-user-tie"></i> Leadership</a>
+    <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+  </nav>
+</div>
+
+<!-- Main Content -->
+<div class="main-content" id="mainContent">
+  <header>
+    <button class="toggle-btn" id="toggleSidebar" aria-label="Toggle Sidebar"><i class="fas fa-bars"></i></button>
+    <h1>We Can Voice for Women Foundation</h1>
+  </header>
+  <main>
+    <section id="about" class="card">
+      <h2><i class="fas fa-info-circle"></i> About the Organization</h2>
+      <p>The <strong>We Can Voice for Women Foundation</strong> is a grassroots non-governmental organization (NGO) committed to fostering gender equity and empowering women across India. Established in 2019, the Foundation was born out of a deep-seated belief that women’s empowerment is a national priority essential for inclusive and sustainable development.</p>
+      <p>We believe true empowerment is multi-dimensional and must address education, healthcare, economic independence, legal protection, and social inclusion. Our mission is to dismantle societal barriers and build ecosystems where women can thrive with dignity and autonomy.</p>
+      <p>Our programs uplift women from marginalized communities by equipping them with knowledge, skills, resources, and confidence to lead independent lives. We actively promote male allyship as vital partners in the journey toward gender justice.</p>
+    </section>
+
+    <section id="vision-mission" class="grid">
+      <article class="card">
+        <h2><i class="fas fa-eye"></i> Vision</h2>
+        <p>To create a society where women are enlightened, healthy, and empowered, capable of making informed choices, leading independent lives, and contributing meaningfully to nation-building.</p>
+        <h4>Vision Pillars</h4>
+        <ul>
+          <li><strong>Women Enlightenment:</strong> Equal access to quality education and literacy.</li>
+          <li><strong>Women Enhealthment:</strong> Promoting physical and mental health awareness and preventive care.</li>
+          <li><strong>Women Empowerment:</strong> Enabling economic independence through skills development and entrepreneurship.</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h2><i class="fas fa-bullseye"></i> Mission</h2>
+        <p>Our mission is to provide holistic support systems that empower women to live with independence, dignity, and purpose. We create safe, inclusive, resource-rich environments enabling women to overcome socio-economic barriers and actively contribute to their communities.</p>
+      </article>
+    </section>
+
+    <section id="focus-areas" class="card">
+      <h2><i class="fas fa-bullseye"></i> Core Focus Areas</h2>
+      <ul>
+        <li><strong>Education & Literacy Initiatives:</strong> Promoting lifelong learning and school/college enrollment.</li>
+        <li><strong>Health & Well-being Programs:</strong> Addressing menstrual hygiene, maternal health, and mental wellness.</li>
+        <li><strong>Livelihood & Economic Empowerment:</strong> Vocational training, entrepreneurship support, job placement.</li>
+        <li><strong>Gender Equality & Advocacy:</strong> Campaigns, awareness drives, and legal aid for women's rights.</li>
+        <li><strong>Community Engagement:</strong> Mobilizing local communities to challenge gender norms and support inclusion.</li>
+        <li><strong>Counseling & Support Services:</strong> Emotional and psychological support for women in crisis.</li>
+      </ul>
+    </section>
+
+    <section id="beneficiaries" class="card">
+      <h2><i class="fas fa-users"></i> Target Beneficiaries</h2>
+      <ul>
+        <li>Women and girls from marginalized and underserved communities</li>
+        <li>Survivors of domestic violence and gender-based discrimination</li>
+        <li>Unemployed or underemployed women seeking economic opportunities</li>
+        <li>Adolescent girls needing health and reproductive education</li>
+        <li>Rural women needing literacy and skill development</li>
+      </ul>
+    </section>
+
+    <section id="geographic-focus" class="card">
+      <h2><i class="fas fa-map-marker-alt"></i> Geographic Focus</h2>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Map_of_India_Tamil_Nadu_locator.svg/800px-Map_of_India_Tamil_Nadu_locator.svg.png" alt="Map showing Tamil Nadu, India" style="max-width: 100%; border-radius:12px; box-shadow: 0 4px 10px rgba(214,51,108,0.3); margin: 1rem 0;" />
+      <p>Primary operations in Chennai, Tamil Nadu, with expanding outreach to neighboring districts and rural regions of South India.</p>
+    </section>
+
+    <section id="partnerships" class="card">
+      <h2><i class="fas fa-handshake"></i> Partnerships & Collaborations</h2>
+      <ul>
+        <li>Government Agencies and Organizations</li>
+        <li>Local and International NGOs</li>
+        <li>CSR Partners</li>
+        <li>Academic Institutions</li>
+        <li>Health and Legal Professionals</li>
+        <li>Media and Advocacy Groups</li>
+      </ul>
+    </section>
+
+    <section id="leadership" class="card">
+      <h2><i class="fas fa-user-tie"></i> Leadership & Governance</h2>
+      <div class="leadership-container">
+        <article class="leader" aria-label="Founder and President">
+          <img src="Mr. Gunalan Lavanyan.png" alt="Portrait of Mr Gunalan Lavanyan" />
+          <h4>Mr. Gunalan Lavanyan</h4>
+          <p><em>Founder & President</em></p>
+          <p>A seasoned media professional with over 20 years of experience, Mr. Gunalan is a passionate advocate for social justice. Since initiating the movement in 2016, he combines creative communication, grassroots mobilization, and strategic vision to lead the organization.</p>
+        </article>
+        <article class="leader" aria-label="Secretary and Treasurer">
+          <img src="Mrs.Oorvasi Gunalan.png" alt="Portrait of Mrs Oorvasi Gunalan" />
+          <h4>Mrs. Oorvasi Gunalan</h4>
+          <p><em>Secretary & Treasurer</em></p>
+          <p>With a strong academic background in mathematics and a passion for community welfare, Mrs. Oorvasi plays key roles in program management, women counseling, and grassroots engagement. Her dedication is critical to the Foundation's impact.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="card">
+      <h2><i class="fas fa-envelope"></i> Contact Information</h2>
+      <address>
+        We Can Voice for Women Foundation<br />
+        Plot No. 32, Door No. 3/1 Ayyappa Nagar First Main Road,<br />
+        Virugambakkam, Chennai, Tamil Nadu – 600092<br />
+        Email: <a href="mailto:wecanvoiceforwomen@gmail.com">wecanvoiceforwomen@gmail.com</a><br />
+        <a href="https://www.facebook.com/wecanvoiceforwomen" target="_blank" rel="noopener" aria-label="Facebook Page"><i class="fab fa-facebook-square"></i> Facebook</a> |
+        <a href="https://www.instagram.com/wecanvoiceforwomen/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i> Instagram</a> |
+        <a href="https://www.linkedin.com/company/voiceforwomen/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      </address>
+    </section>
+
+    <section class="call-to-action">
+      Join us in our mission to empower women and transform communities. Whether through volunteering, donations, partnerships, or spreading awareness, your support creates lasting impact.
+    </section>
+  </main>
+</div>
+
+
+
+<script>
+  const toggleBtn = document.getElementById('toggleSidebar');
+  const sidebar = document.getElementById('sidebar');
+
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('collapsed');
+  });
+
+  // Scrollspy and active link highlighting
+  const navLinks = document.querySelectorAll('.sidebar nav a');
+  const sections = Array.from(navLinks).map(link => {
+    const id = link.getAttribute('href').substring(1);
+    return document.getElementById(id);
+  });
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 70;
+      if(scrollY >= sectionTop) {
+        current = section.id;
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if(link.getAttribute('href').substring(1) === current) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
+
+
+</body>
+</html>
